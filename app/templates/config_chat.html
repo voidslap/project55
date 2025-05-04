@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %}Chat Configuration{% endblock %}
+{% block nav_title %}Chat Configuration{% endblock %}
+
+{% block content %}
+<div class="settings-container">
+    <div class="page-header">
+        <h1><i class="fas fa-sliders-h"></i> Chat Configuration</h1>
+        <p>Customize how the AI assistant communicates with your audience</p>
+    </div>
+
+    <form method="POST" action="{{ url_for('main.save_chat_config') }}">
+        {{ form.hidden_tag() }}
+        {% if chat_id %}
+            <input type="hidden" name="chat_id" value="{{ chat_id }}">
+        {% endif %}
+        
+        <div class="settings-card">
+            <div class="settings-section">
+                <h3><i class="fas fa-comment"></i> Communication Style</h3>
+                <p class="form-description">Set the tone and personality for this conversation</p>
+                <div class="form-group">
+                    {{ form.tone_style.label }}
+                    {{ form.tone_style(class="form-control") }}
+                    <span class="form-text">Choose how you want the AI to communicate</span>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3><i class="fas fa-share-alt"></i> Platform Settings</h3>
+                <p class="form-description">Optimize content for your target platform</p>
+                <div class="form-group">
+                    {{ form.platform.label }}
+                    {{ form.platform(class="form-control") }}
+                    <span class="form-text">Select the platform where you'll share this content</span>
+                </div>
+            </div>
+
+            <div class="settings-section">
+                <h3><i class="fas fa-text-height"></i> Content Length</h3>
+                <p class="form-description">Define your preferred content length</p>
+                <div class="form-group">
+                    {{ form.length.label }}
+                    {{ form.length(class="form-control") }}
+                    <span class="form-text">Choose how detailed you want the responses to be</span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                {{ form.submit(class="btn btn-primary btn-submit") }}
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.settings-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+}
+
+.select-wrapper {
+    position: relative;
+    width: 300px;
+}
+
+.select-wrapper i {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.form-control {
+    width: 300px;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.5rem;
+}
+
+.form-text {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.settings-section {
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+}
+
+.settings-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--text-color);
+}
+
+.settings-section h3 i {
+    color: var(--primary-color);
+    background: rgba(114, 137, 218, 0.1);
+    padding: 0.75rem;
+    border-radius: 10px;
+}
+
+.form-description {
+    color: var(--text-secondary);
+    margin: 1rem 0 2rem;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.form-actions {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    text-align: right;
+}
+
+.btn-submit {
+    padding: 1rem 2.5rem;
+    font-size: 1.1rem;
+}
+</style>
+{% endblock %}

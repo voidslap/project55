@@ -1,0 +1,16 @@
+flask
+flask_sqlalchemy
+flask_login
+anthropic
+python-dotenv
+pytrends
+pandas
+gnews
+lxml[html_clean]
+newspaper3k
+flask-wtf
+wtforms
+feedparser
+flask_limiter
+email-validator
+pytest

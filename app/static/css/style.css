@@ -1,0 +1,1312 @@
+/* ======================================================
+   Universal Box Sizing
+====================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ======================================================
+   Core Variables
+====================================================== */
+:root {
+  --primary-color: #7289da;
+  --secondary-color: #5865f2;
+  --background-color: #1a1b1e;
+  --card-bg: #27282c;
+  --text-color: #e3e5e8;
+  --text-secondary: #b9bbbe;
+  --error-color: #ed4245;
+  --success-color: #3ba55c;
+  --input-bg: #1e1f22;
+  --input-border: #2f3136;
+  --hover-color: #32353b;
+}
+
+/* ======================================================
+   Base Styles
+====================================================== */
+body {
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ======================================================
+   Card Styles
+   (Shared base for non‐interactive and interactive cards)
+====================================================== */
+/* Base Card Style */
+.card,
+.settings-card,
+.auth-card {
+  background: rgba(30, 31, 34, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  transition: none;
+}
+
+/* Interactive Cards */
+.clickable-card,
+.dashboard-card,
+.chat-item,
+.hot-trend-item,
+.news-card {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.clickable-card:hover,
+.dashboard-card:hover,
+.chat-item:hover,
+.hot-trend-item:hover,
+.news-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary-color);
+  background: var(--hover-color);
+}
+
+
+
+/* ======================================================
+   Buttons
+====================================================== */
+/* Base Button Styles */
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  font-size: 0.95rem;
+  background: var(--input-bg);
+  color: var(--text-color);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+  background: var(--hover-color);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Primary Button */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color), #60a5fa);
+  color: white;
+  box-shadow: 0 4px 12px rgba(114, 137, 218, 0.2);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #60a5fa, var(--primary-color));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(114, 137, 218, 0.3);
+}
+
+/* Submit Button */
+.btn-submit {
+  width: 100%;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-color), #60a5fa);
+  color: white;
+  box-shadow: 0 4px 12px rgba(114, 137, 218, 0.2);
+  transition: all 0.2s ease-in-out;
+  margin: 1.5rem auto;
+}
+
+.btn-submit:hover {
+  background: linear-gradient(135deg, #60a5fa, var(--primary-color));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(114, 137, 218, 0.3);
+}
+
+/* Start Chat Button */
+.btn-start-chat {
+  background: linear-gradient(135deg, var(--primary-color), #60a5fa);
+  color: white;
+  padding: 1rem 2rem;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(114, 137, 218, 0.2);
+}
+
+.btn-start-chat:hover {
+  background: linear-gradient(135deg, #60a5fa, var(--primary-color));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(114, 137, 218, 0.3);
+}
+
+/* Logout Button */
+.btn-logout {
+  background: var(--input-bg);
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-logout:hover {
+  background: var(--hover-color);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: var(--primary-color);
+}
+
+/* Sign In Button */
+.btn-sign-in {
+  background: linear-gradient(135deg, var(--primary-color), #60a5fa);
+  color: white;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(114, 137, 218, 0.2);
+}
+
+.btn-sign-in:hover {
+  background: linear-gradient(135deg, #60a5fa, var(--primary-color));
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(114, 137, 218, 0.3);
+}
+
+/* ======================================================
+   Chat Styles
+====================================================== */
+.chat-container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  height: calc(100vh - 4rem);
+}
+
+.chat-card {
+  height: calc(100vh - 12rem);
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--card-bg);
+}
+
+.chat-messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color);
+  border-radius: 4px;
+}
+
+.message {
+  padding: 1rem 1.5rem;
+  margin-bottom: 1rem;
+  border-radius: 12px;
+  max-width: 70%;
+  animation: fadeIn 0.3s ease;
+  line-height: 1.5;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-message {
+  background-color: var(--primary-color);
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+.bot-message {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chat-input {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--card-bg);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chat-input input {
+  flex-grow: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.chat-input input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(114, 137, 218, 0.1);
+}
+
+.chat-input input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* ======================================================
+   Navbar
+====================================================== */
+.navbar {
+  background-color: var(--card-bg);
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 2rem;
+}
+
+.nav-title {
+  margin: 0;
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.nav-buttons .btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-buttons .btn i {
+  font-size: 0.9rem;
+}
+
+/* ======================================================
+   Form Styles (General)
+====================================================== */
+.form-group {
+  margin-bottom: 1.5rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-color);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--input-border);
+  border-radius: 12px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(114, 137, 218, 0.1);
+  outline: none;
+}
+
+.form-control::placeholder {
+  color: var(--text-secondary);
+}
+
+/* ======================================================
+   Flash Messages & Animations
+====================================================== */
+.flash-message {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.flash-error {
+  background-color: var(--error-color);
+  color: white;
+}
+
+.flash-success {
+  background-color: var(--success-color);
+  color: white;
+}
+
+/* ======================================================
+   Links
+====================================================== */
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--secondary-color);
+}
+
+/* ======================================================
+   Dashboard Styles
+====================================================== */
+.dashboard-container {
+  width: 80%;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-color);
+  aspect-ratio: 1;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: var(--primary-color);
+  background: var(--hover-color);
+}
+
+.dashboard-card i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+  transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover i {
+  transform: scale(1.1);
+}
+
+.dashboard-card span {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 1rem;
+}
+
+/* ======================================================
+   Chat History
+====================================================== */
+.chat-history-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chat-item {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--text-color);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.chat-item:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary-color);
+  background: var(--hover-color);
+}
+
+.chat-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.chat-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Increased gap between date and delete button */
+}
+
+.btn-delete {
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete i {
+  color: var(--error-color); /* Makes trash icon red */
+  font-size: 1rem;
+}
+
+.btn-delete:hover {
+  transform: scale(1.1);
+}
+
+.chat-date {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.chat-item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.chat-config {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ======================================================
+   Empty State & Related Sections
+====================================================== */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.empty-state i {
+  font-size: 3rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  margin: 1rem 0;
+  font-weight: 500;
+}
+
+.empty-state p {
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.related-section {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--input-border);
+}
+
+.related-grid,
+.geo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.related-item,
+.geo-item {
+  background: var(--input-bg);
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rising {
+  border-left: 3px solid #2ed573;
+}
+
+.top {
+  border-left: 3px solid #1e90ff;
+}
+
+.trend-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.trend-summary {
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--input-bg);
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+/* ======================================================
+   News & Summary Sections
+====================================================== */
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.btn-summarize {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.summary-section {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: var(--input-bg);
+  border-radius: 8px;
+  border: 1px solid var(--input-border);
+}
+
+.summary-content h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: var(--primary-color);
+}
+
+.summary-text {
+  line-height: 1.6;
+  color: var(--text-color);
+}
+
+.loading-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+}
+
+/* ======================================================
+   Chat Header
+====================================================== */
+.chat-header .header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.chat-header .btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+.chat-header .btn:hover {
+  background: var(--hover-color);
+}
+
+.chat-header .btn i {
+  font-size: 0.9rem;
+}
+
+/* ======================================================
+   Settings & Config Pages
+====================================================== */
+.settings-container,
+.config-container {
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 0 2rem;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  animation: fadeIn 0.6s ease;
+}
+
+.page-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-color), transparent);
+  border-radius: 2px;
+}
+
+.page-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-color), #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.page-header p {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Enhanced Settings Card & Section */
+.settings-card {
+  background: rgba(30, 31, 34, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: 0 auto;
+  transition: none;
+}
+
+/* FORM OVERRIDES FOR SETTINGS/CONFIG PAGES */
+/* Center the form groups instead of offsetting them */
+.settings-container .form-group,
+.config-container .form-group {
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+/* All input fields use a fixed width of 400px */
+.settings-section input.form-control,
+.config-container input.form-control {
+  width: 400px;
+}
+
+/* Change textareas to match input widths (400px) */
+.settings-section textarea.form-control,
+.config-container textarea.form-control {
+  width: 400px;
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* Select dropdowns */
+.settings-container select.form-control,
+.config-container select.form-control,
+select.form-control {
+    width: 400px;
+    min-width: 200px;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 2.5rem;
+    background-color: var(--input-bg);
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237289da' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Hover and focus states */
+.settings-container select.form-control:hover,
+.config-container select.form-control:hover,
+select.form-control:hover {
+    background-color: var(--hover-color);
+    border-color: var(--primary-color);
+}
+
+.settings-container select.form-control:focus,
+.config-container select.form-control:focus,
+select.form-control:focus {
+    background-color: var(--input-bg);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(114, 137, 218, 0.1);
+    outline: none;
+}
+
+/* Option styling */
+.settings-container select.form-control option,
+.config-container select.form-control option,
+select.form-control option {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 0.5rem;
+}
+
+/* Adjust the description text to be centered */
+.form-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  margin-left: 0;
+  max-width: 600px;
+  text-align: left;
+}
+
+/* Section Layout */
+.settings-section {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.settings-section:last-child {
+  border-bottom: none;
+}
+
+/* Section Headers */
+.settings-section h3 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 1.4rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+}
+
+.settings-section h3 i {
+  color: var(--primary-color);
+  background: rgba(114, 137, 218, 0.1);
+  padding: 0.75rem;
+  border-radius: 10px;
+}
+
+/* Form Elements */
+.form-group {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-description {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Form Controls */
+.form-control {
+  width: 400px;
+  padding: 0.875rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+/* Select Inputs */
+select.form-control {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237289da' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+  padding-right: 2.5rem;
+}
+
+/* Helper Text */
+.form-text {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+  width: 100%;
+}
+
+/* Form Actions */
+.form-actions {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  text-align: center;
+}
+
+.btn-submit {
+  min-width: 200px;
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .settings-container,
+  .config-container {
+    padding: 0 1rem;
+  }
+  
+  .settings-card {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .form-actions {
+    text-align: center;
+  }
+  
+  /* Remove extra left margins in settings forms */
+  .settings-section .form-group,
+  .config-container .form-group,
+  .select-wrapper,
+  .form-description,
+  .form-text {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  select.form-control,
+  textarea.form-control {
+    width: 100%;
+  }
+
+  .form-control {
+    width: 100%;
+  }
+}
+
+/* ======================================================
+   Authentication Forms
+====================================================== */
+.login-container,
+.register-container {
+  max-width: 400px;
+  margin: 6rem auto 0;
+  padding: 0 1.5rem;
+}
+
+.auth-card {
+  background: rgba(30, 31, 34, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 24px;
+  padding: 2.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-container form,
+.register-container form {
+  width: 280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-container .form-group,
+.register-container .form-group {
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.login-container .form-control,
+.register-container .form-control {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  color: var(--text-color);
+  font-size: 0.95rem;
+}
+
+.login-container .form-group label,
+.register-container .form-group label {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 0.75rem;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.login-container .form-actions,
+.register-container .form-actions {
+  width: 100%;
+  margin: 2rem 0 1rem;
+  text-align: center;
+}
+
+.login-container .btn-submit,
+.register-container .btn-submit {
+  width: 100%;
+  padding: 0.875rem 0;
+  margin: 0;
+}
+
+.login-footer,
+.register-footer {
+  width: 100%;
+  text-align: center;
+  margin-top: 1.5rem;
+}
+
+/* Hide extra header in auth pages */
+.auth-header {
+  display: none;
+}
+
+/* ======================================================
+   Site Header
+====================================================== */
+.site-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  margin: -3rem -2rem 3rem;
+}
+
+.site-header a {
+  text-decoration: none;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: color 0.3s ease;
+}
+
+.site-header a:hover {
+  color: var(--primary-color);
+}
+
+.site-header i {
+  font-size: 1.5rem;
+}
+
+/* ======================================================
+   Media Queries (Mobile)
+====================================================== */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .settings-container,
+  .config-container {
+    padding: 0 1rem;
+  }
+  
+  .settings-card {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .form-actions {
+    text-align: center;
+  }
+  
+  /* Remove extra left margins in settings forms */
+  .settings-section .form-group,
+  .config-container .form-group,
+  .select-wrapper,
+  .form-description,
+  .form-text {
+    margin-left: 0;
+    width: 100%;
+  }
+  
+  select.form-control,
+  textarea.form-control {
+    width: 100%;
+  }
+}
+
+/* ======================================================
+   Config Dropdown Overrides
+   (Wrap select fields in a container to manage the arrow)
+====================================================== */
+.settings-container .select-wrapper,
+.config-container .select-wrapper {
+  position: relative;
+  width: 250px;       /* Reduced width */
+  min-width: 150px;
+}
+
+/* Remove the custom background and native arrow from the select */
+.settings-container .select-wrapper select,
+.config-container .select-wrapper select {
+  width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: none; /* Remove any default background styling */
+  padding-right: 2.5rem; /* Provide space for the custom arrow */
+}
+
+/* Add a single custom arrow using a pseudo-element on the wrapper */
+.settings-container .select-wrapper::after,
+.config-container .select-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  width: 1em;
+  height: 1em;
+  background: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237289da' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") no-repeat center center;
+  background-size: 1em;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+/* Trends Page Layout */
+.trends-container {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+/* Hot Trends Section */
+.hot-trends-container {
+    max-width: 800px;
+    margin: 4rem auto 2rem;
+    padding: 0 2rem;
+}
+
+.hot-trends-container h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.4rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+}
+
+.hot-trends-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.hot-trend-item {
+    background: rgba(30, 31, 34, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-color);
+}
+
+.hot-trend-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--primary-color);
+    background: var(--hover-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Trend Card Styling */
+.trend-card {
+    background: rgba(30, 31, 34, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 24px;
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* Trend Stats */
+.trend-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.stat-item {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+/* News Section */
+.news-section {
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.news-card {
+    background: rgba(30, 31, 34, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 1.5rem;
+}
+
+/* Form Controls */
+.keyword-input {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.keyword-input .form-control {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-color);
+    font-size: 0.95rem;
+}
+
+/* Summary Section */
+.summary-section {
+    background: rgba(30, 31, 34, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 16px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .trends-container,
+    .hot-trends-container {
+        padding: 0 1rem;
+        margin: 2rem auto;
+    }
+
+    .trend-card {
+        padding: 1.5rem;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block nav_title %}AI Chatbot Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="dashboard-grid">
+        <!-- Chat Card -->
+        <a href="{{ url_for('main.config_chat') }}" class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <h3>Start New Chat</h3>
+            <p>Begin a new conversation with AI assistant</p>
+            <div class="dashboard-btn">
+                <span>New Chat</span>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+
+        <!-- Settings Card -->
+        <a href="{{ url_for('main.settings') }}" class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-cog"></i>
+            </div>
+            <h3>Settings</h3>
+            <p>Configure your company profile and preferences</p>
+            <div class="dashboard-btn">
+                <span>Settings</span>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+
+        <!-- Chat History Card -->
+        <a href="{{ url_for('main.chat_history') }}" class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-history"></i>
+            </div>
+            <h3>Chat History</h3>
+            <p>View your previous chat conversations</p>
+            <div class="dashboard-btn">
+                <span>View History</span>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+
+        <!-- Trends Card -->
+        <a href="{{ url_for('main.trends') }}" class="dashboard-card">
+            <div class="card-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <h3>Trend Analysis</h3>
+            <p>Analyze current trends and insights</p>
+            <div class="dashboard-btn">
+                <span>View Trends</span>
+                <i class="fas fa-arrow-right"></i>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

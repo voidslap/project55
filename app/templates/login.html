@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="login-container">
+    <div class="auth-card">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message flash-error">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST" action="{{ url_for('main.login') }}">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.username.label }}
+                {{ form.username(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label }}
+                {{ form.password(class="form-control") }}
+            </div>
+            <div class="form-actions">
+                {{ form.submit(class="btn btn-primary btn-submit") }}
+            </div>
+        </form>
+        <div class="login-footer">
+            <p>Don't have an account? <a href="{{ url_for('main.register') }}">Register here</a></p>
+        </div>
+    </div>
+</div>
+{% endblock %}

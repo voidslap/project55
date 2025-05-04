@@ -1,0 +1,552 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        .trends-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 2rem auto;
+        }
+
+        .keyword-input {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .keyword-input input {
+            flex-grow: 1;
+        }
+
+        .trend-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .trend-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--input-border);
+        }
+
+        .trend-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .trend-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            background: var(--input-bg);
+            border-radius: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .news-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--input-border);
+        }
+
+        .news-section h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .news-grid {
+            display: grid;
+            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .news-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--input-bg);
+            border-radius: 8px;
+            padding: 1.25rem;
+            border: 1px solid var(--input-border);
+            transition: all 0.2s ease;
+        }
+
+        .news-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .news-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .news-preview {
+            flex: 1;
+            margin: 0.75rem 0;
+        }
+
+        .news-card h4 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+
+        .news-card p {
+            color: var(--text-color);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .no-preview {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--input-border);
+        }
+
+        .news-date {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .news-card .btn-sm {
+            padding: 0.35rem 0.75rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .news-card .btn-sm i {
+            font-size: 0.8rem;
+        }
+
+        .no-news {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .hot-trends-container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 2rem auto;
+        }
+
+        .hot-trends-container h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hot-trends-container h3 i {
+            color: #ff6b6b;
+        }
+
+        .hot-trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .hot-trend-item {
+            background: var(--card-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+
+        .hot-trend-item:hover {
+            background: var(--hover-color);
+            transform: translateY(-2px);
+            border-color: var(--primary-color);
+        }
+
+        .trend-summary-section {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            background: var(--input-bg);
+            border-radius: 8px;
+        }
+
+        .trend-summary-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .key-points {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .sentiment-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .sentiment-positive {
+            background: rgba(46, 213, 115, 0.1);
+            color: #2ed573;
+        }
+
+        .sentiment-negative {
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+        }
+
+        .sentiment-neutral {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="hot-trends-container">
+        <h3><i class="fas fa-fire"></i> Hot Trends Right Now</h3>
+        <div class="hot-trends-grid">
+            {% for trend in hot_trends %}
+            <button class="hot-trend-item" onclick="analyzeTrend('{{ trend }}')">
+                <span class="trend-text">{{ trend }}</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="trends-container">
+        <div class="card">
+            <form id="trendsForm" class="keyword-input">
+                {{ form.hidden_tag() }}
+                {{ form.keywords(class="form-control", 
+                               placeholder="Enter keywords separated by commas (e.g., AI, Machine Learning, Data Science)") }}
+                {{ form.submit(class="btn btn-primary") }}
+            </form>
+            <div id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        const trendsForm = document.getElementById('trendsForm');
+        const resultsDiv = document.getElementById('results');
+        let lastAnalysisTime = 0;
+        const ANALYSIS_COOLDOWN = 3000; // 3 seconds in milliseconds
+        const summarizedTopics = new Set(); // Keep track of summarized topics
+
+        trendsForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Check rate limit
+            const now = Date.now();
+            if (now - lastAnalysisTime < ANALYSIS_COOLDOWN) {
+                const remainingTime = Math.ceil((ANALYSIS_COOLDOWN - (now - lastAnalysisTime)) / 1000);
+                resultsDiv.innerHTML = `
+                    <div class="flash-message flash-error">
+                        Please wait ${remainingTime} seconds before analyzing again
+                    </div>
+                `;
+                return;
+            }
+            
+            lastAnalysisTime = now;
+            summarizedTopics.clear(); // Reset summarized topics when searching new terms
+            
+            const keywords = document.getElementById('keywords').value;
+            
+            // Show loading state
+            resultsDiv.innerHTML = `
+                <div class="loading">
+                    <i class="fas fa-spinner fa-2x"></i>
+                    <p>Analyzing trends...</p>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/analyze_trends', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        keywords: keywords.split(',')
+                            .map(k => k.trim())
+                            .filter(k => k.length > 0) 
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.trends) {
+                    resultsDiv.innerHTML = data.trends.map(trend => `
+                        <div class="trend-card">
+                            <div class="trend-header">
+                                <h2 class="trend-title">${trend.title}</h2>
+                            </div>
+
+                            <div class="trend-summary">
+                                <p>${trend.trend_summary}</p>
+                            </div>
+
+                            ${trend.interest_data ? `
+                                <div class="trend-stats">
+                                    <div class="stat-item">
+                                        <div class="stat-label">Average Interest</div>
+                                        <div class="stat-value">${trend.interest_data.average.toFixed(1)}</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-label">Peak Interest</div>
+                                        <div class="stat-value">${trend.interest_data.peak}</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-label">Current Interest</div>
+                                        <div class="stat-value">${trend.interest_data.current}</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="stat-label">Peak Date</div>
+                                        <div class="stat-value">${trend.interest_data.peak_date}</div>
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${trend.related_topics.length ? `
+                                <div class="related-section">
+                                    <h3>Related Topics</h3>
+                                    <div class="related-grid">
+                                        ${trend.related_topics.map(topic => `
+                                            <div class="related-item ${topic.type}">
+                                                <span class="topic-title">${topic.topic}</span>
+                                                <span class="topic-value">${topic.value}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${trend.related_queries.length ? `
+                                <div class="related-section">
+                                    <h3>Related Searches</h3>
+                                    <div class="related-grid">
+                                        ${trend.related_queries.map(query => `
+                                            <div class="related-item ${query.type}">
+                                                <span class="query-text">${query.query}</span>
+                                                <span class="query-value">${query.value}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${trend.geographic_data.length ? `
+                                <div class="related-section">
+                                    <h3>Top Regions</h3>
+                                    <div class="geo-grid">
+                                        ${trend.geographic_data.map(geo => `
+                                            <div class="geo-item">
+                                                <span class="geo-region">${geo.region}</span>
+                                                <span class="geo-value">${geo.value}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            ${trend.news_articles && trend.news_articles.length ? `
+                                <div class="news-section">
+                                    <div class="news-header">
+                                        <h3>Latest News</h3>
+                                        <button class="btn btn-primary btn-summarize" onclick="summarizeNews('${trend.title}')">
+                                            <i class="fas fa-book-reader"></i> Summarize All
+                                        </button>
+                                    </div>
+                                    <div class="news-grid">
+                                        ${trend.news_articles.map(article => `
+                                            <div class="news-card">
+                                                <div class="news-content">
+                                                    <h4>${article.title || 'No Title'}</h4>
+                                                    <div class="news-meta">
+                                                        <span class="news-date">
+                                                            <i class="far fa-calendar-alt"></i>
+                                                            ${article.published_date || 'No date'}
+                                                        </span>
+                                                        <a href="${article.url}" target="_blank" class="btn btn-sm">
+                                                            <i class="fas fa-external-link-alt"></i> Read More
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                    <div id="summary-${trend.title.replace(/\s+/g, '-')}" class="summary-section" style="display: none;">
+                                        <div class="summary-content">
+                                            <h4><i class="fas fa-chart-line"></i> Combined Summary</h4>
+                                            <div class="summary-text"></div>
+                                        </div>
+                                        <div class="summary-actions">
+                                            <button class="btn btn-primary" onclick="generateNewsContent('${trend.title}')" style="display: none;" id="generate-content-${trend.title.replace(/\s+/g, '-')}">
+                                                <i class="fas fa-pen"></i> Generate Content from News
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            ` : '<p class="no-news">No recent news articles found</p>'}
+                        </div>
+                    `).join('');
+                } else {
+                    throw new Error(data.error || data.message || 'Failed to analyze trends');
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="flash-message flash-error">
+                        ${error.message || 'An error occurred while analyzing trends'}
+                    </div>
+                `;
+                console.error('Error:', error);
+            }
+        });
+
+        function analyzeTrend(trend) {
+            document.getElementById('keywords').value = trend;
+            trendsForm.dispatchEvent(new Event('submit'));
+        }
+
+        function getSentimentIcon(sentiment) {
+            switch(sentiment.toLowerCase()) {
+                case 'positive': return 'smile';
+                case 'negative': return 'frown';
+                default: return 'meh';
+            }
+        }
+
+        async function summarizeNews(keyword) {
+            // Check if already summarized
+            if (summarizedTopics.has(keyword)) {
+                return;
+            }
+            
+            const summarySection = document.getElementById(`summary-${keyword.replace(/\s+/g, '-')}`);
+            const summaryText = summarySection.querySelector('.summary-text');
+            const generateBtn = document.getElementById(`generate-content-${keyword.replace(/\s+/g, '-')}`);
+            const summarizeBtn = event.target;
+            
+            // Add to summarized set
+            summarizedTopics.add(keyword);
+            
+            // Disable the button permanently for this topic
+            summarizeBtn.disabled = true;
+            summarizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+            
+            // Show loading state
+            summarySection.style.display = 'block';
+            summaryText.innerHTML = `
+                <div class="loading-summary">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    Analyzing articles...
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/summarize_news', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ keyword: keyword })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.summary) {
+                    summaryText.innerHTML = data.summary;
+                    generateBtn.style.display = 'inline-flex';
+                    generateBtn.setAttribute('data-summary', data.summary);
+                    // Update button to show completed state
+                    summarizeBtn.innerHTML = '<i class="fas fa-check"></i> Summarized';
+                } else {
+                    throw new Error(data.error || 'Failed to generate summary');
+                }
+            } catch (error) {
+                summaryText.innerHTML = `
+                    <div class="flash-message flash-error">
+                        ${error.message || 'An error occurred while generating the summary'}
+                    </div>
+                `;
+                summarizeBtn.innerHTML = '<i class="fas fa-exclamation-circle"></i> Failed';
+                summarizedTopics.delete(keyword); // Allow retry if failed
+            }
+        }
+
+        function generateNewsContent(title) {
+            const generateBtn = document.getElementById(`generate-content-${title.replace(/\s+/g, '-')}`);
+            const summary = generateBtn.getAttribute('data-summary');
+            window.location.href = `/news_content_config?summary=${encodeURIComponent(summary)}&title=${encodeURIComponent(title)}`;
+        }
+    </script>
+</body>
+{% endblock %}

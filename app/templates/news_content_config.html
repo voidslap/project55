@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="config-container">
+    <div class="card">
+        <form method="POST" action="{{ url_for('main.save_news_config') }}">
+            {{ form.hidden_tag() }}
+            <input type="hidden" name="summary" value="{{ summary }}">
+            <input type="hidden" name="title" value="{{ title }}">
+            
+            <div class="form-group">
+                {{ form.content_type.label }}
+                {{ form.content_type(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.platform.label }}
+                {{ form.platform(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.tone_style.label }}
+                {{ form.tone_style(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                {{ form.length.label }}
+                {{ form.length(class="form-control") }}
+            </div>
+
+            <div class="form-actions">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

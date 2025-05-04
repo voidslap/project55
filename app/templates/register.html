@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - AI Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .register-container {
+            max-width: 400px;
+            margin: 100px auto;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .password-requirements {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        .invalid {
+            border-color: var(--error-color) !important;
+        }
+        
+        .valid {
+            border-color: var(--success-color) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <div class="card">
+            <h1 style="text-align: center; margin-bottom: 2rem;">Create Account</h1>
+            
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="flash-message flash-error">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form method="POST" action="{{ url_for('main.register') }}" id="registerForm">
+                {{ form.hidden_tag() }}
+                
+                <div class="form-group">
+                    {{ form.username.label }}
+                    {{ form.username(class="form-control") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.email.label }}
+                    {{ form.email(class="form-control") }}
+                </div>
+
+                <div class="form-group">
+                    {{ form.password.label }}
+                    {{ form.password(class="form-control") }}
+                    <div class="password-requirements">
+                        Password must contain:
+                        <ul>
+                            <li id="length">At least 8 characters</li>
+                            <li id="uppercase">One uppercase letter</li>
+                            <li id="lowercase">One lowercase letter</li>
+                            <li id="number">One number</li>
+                            <li id="special">One special character</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {{ form.confirm_password.label }}
+                    {{ form.confirm_password(class="form-control") }}
+                </div>
+
+                {{ form.submit(class="btn btn-primary", style="width: 100%", disabled="true", id="submitBtn") }}
+            </form>
+
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <p>Already have an account? <a href="{{ url_for('main.login') }}">Sign in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm_password');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        function validatePassword() {
+            const pass = password.value;
+            const requirements = {
+                length: pass.length >= 8,
+                uppercase: /[A-Z]/.test(pass),
+                lowercase: /[a-z]/.test(pass),
+                number: /[0-9]/.test(pass),
+                special: /[!@#$%^&*]/.test(pass)
+            };
+            
+            // Update requirement list styling
+            for (let req in requirements) {
+                const element = document.getElementById(req);
+                if (requirements[req]) {
+                    element.style.color = 'green';
+                } else {
+                    element.style.color = 'red';
+                }
+            }
+            
+            // Check if all requirements are met
+            const allValid = Object.values(requirements).every(Boolean);
+            const passwordsMatch = password.value === confirmPassword.value;
+            
+            submitBtn.disabled = !(allValid && passwordsMatch);
+        }
+        
+        password.addEventListener('input', validatePassword);
+        confirmPassword.addEventListener('input', validatePassword);
+    </script>
+</body>
+</html>
